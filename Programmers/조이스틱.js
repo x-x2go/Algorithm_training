@@ -28,5 +28,3 @@ function solution(name) {
     
     return totalMove - maxALength - 1;
 }
-
-}
