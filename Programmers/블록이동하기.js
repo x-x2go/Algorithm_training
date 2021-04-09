@@ -7,11 +7,9 @@ function solution(board) {
     /* [x, y, vertical or horizontal, time] */
     let route = [];
     
+    let check = Array.from({length: N}, () => Array.from({length: N}, ()=>[false,false]));
 
-    let check_vertical = Array.from({length: N}, () => Array(N).fill(false));
-    let check_horizontal = Array.from({length: N}, () => Array(N).fill(false));
-
-    /* 0 : horizontal   1: vertical */
+    /* 0 : vertical   1: horizontal  */
     const robot = {
         0: (x,y)=>[x+1, y],
         1 : (x,y)=> [x, y + 1],
@@ -22,7 +20,7 @@ function solution(board) {
 
 
     route.push([ 0, 0, 1, 0]);
-    check_vertical[0][0] = true;
+    check[0][0][1] = true;
 
 
     // board의 범위 안에서 움직이는지 확인
@@ -47,19 +45,11 @@ function solution(board) {
 
     // 방문한 위치인지 확인 후 방문 했다고 표시
     const checkVisited = (x, y, direction) => {
-        if(direction){
-            if(!check_vertical[x][y]){
-                check_vertical[x][y] = true;
-                return false;
-            }
-            return true;
-        }else{
-            if(!check_horizontal[x][y]){
-                check_horizontal[x][y] = true;
-                return false;
-            }
-            return true;
+        if(!check[x][y][direction]){
+            check[x][y][direction] = true;
+            return false;
         }
+        return true;
     }
 
     while(route.length){
